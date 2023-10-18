@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  api:
+    restart: always
+    build: ./api
+    ports:
+      - 5555:5000
+    depends_on:
+      - mysql
+  fronted:
+    restart: always
+    build: ./frontend
+    ports:
+      - 8954:8954
+  mysql:
+    restart: always
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password 
+      - MYSQL_DATABASE=time_db
+    volumes:
+        - mysql_data2:/var/lib/mysql
+  adminer: 
+    restart: always
+    image: adminer
+    container_name: adminer
+    ports:
+      - 8080:8080
+volumes:
+  mysql_data2:
